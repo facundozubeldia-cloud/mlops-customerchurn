@@ -29,6 +29,8 @@ Lab-Mineria-de-Datos/
 │   └── app.py                    # dashboard Streamlit (Entrega 2)
 ├── reports/
 │   └── informe_parcial1.pdf      # informe técnico del primer parcial
+├── scripts/
+│   └──02_verificación_modelo_churn.py # verificación de modelo ganador
 ├── tests/                        # pruebas automatizadas (Entrega 2)
 ├── .dvc/                         # configuración DVC
 ├── .dvcignore
