@@ -134,7 +134,7 @@ Los experimentos quedan registrados en `notebooks/mlflow.db`.
 Para visualizarlos:
 
 ```bash
-mlflow ui --backend-store-uri sqlite:////home/facundozubeldia/Documentos/fz_workspace/Lab-Mineria-de-Datos/notebooks/mlflow.db --port 5001
+mlflow ui --backend-store-uri sqlite:///notebooks/mlflow.db --port 5001
 ```
 
 Abrí `localhost:5001` → pestaña **Model training** → experimento `AndesLink_Churn_Prediction`.
