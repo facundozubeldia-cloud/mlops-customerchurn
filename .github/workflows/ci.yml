@@ -1,0 +1,9 @@
+name: Mi Primer Workflow
+on: [pull_request, push] # Acá le decís qué eventos lo activan
+
+jobs:
+  hola-mundo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Saludar
+        run: echo "¡Hola! El workflow se está ejecutando correctamente."
