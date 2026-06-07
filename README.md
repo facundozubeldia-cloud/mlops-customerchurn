@@ -1,3 +1,20 @@
+PARA EL FINAL MENCIONO GRAFANA, EVIDENTLY Y PROMETEO
+
+tener en cuenta para el modelo final que limpie nulos cuando entren datos nuevos, igual calculo que cuando haga los testeos me va a hacer hacer algo asi claude, no se.
+
+como ejemplo aparte, conto que en ml todo modelo tiene que tener un foldback, si los umbrales de tolerancia se ven sobrepasados, te envia una alerta y actua el modelo por debajo.
+y si no hay modelo debajo, una distribución estadistica uniforme hacia el.
+
+
+una clasica falla de modelo es un endpoint saturado.
+
+la bitacora es importante porque te permite saber todo de que paso cuando se ejecuto el modelo.
+
+github issues tmb sirve para registrar los incidentes
+
+y en la carpeta reports, podemos tener un archivio html que se llame validation reports, para tener todos estos reportes navegables (capa de monitoreo)
+
+
 # Proyecto MLOps — AndesLink: Predicción de Churn
 
 **Alumnos:** Facundo Zubeldia · Gonzalo Martín González Nastovich · Agustín Meza  
