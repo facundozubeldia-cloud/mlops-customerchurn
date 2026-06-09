@@ -3,8 +3,8 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copiar dependencias primero (cache de Docker)
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements-docker.txt .
+RUN pip install --no-cache-dir -r requirements-docker.txt
 
 # Copiar el proyecto
 COPY src/ ./src/
