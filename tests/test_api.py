@@ -93,3 +93,38 @@ def test_prediccion_cliente_bajo_riesgo():
     assert response.status_code == 200
     data = response.json()
     assert data["probabilidad_churn"] < 0.7
+
+# Test 6: Cliente de alto riesgo
+def test_prediccion_cliente_alto_riesgo():
+    """Un cliente con perfil de alto riesgo debe tener probabilidad >= 0.4."""
+    cliente_riesgo = {
+        "tenure_months": 2,
+        "monthly_charge": 120.0,
+        "total_charges": 240.0,
+        "support_tickets": 8,
+        "late_payments": 4,
+        "avg_monthly_usage_gb": 30.0,
+        "contract_type": "mensual",
+        "payment_method": "efectivo",
+        "internet_service": "movil",
+        "region": "sur",
+        "has_streaming": 0,
+        "has_security_pack": 0,
+        "num_products": 1,
+        "customer_age": 22,
+        "is_promo": 1
+    }
+    response = client.post("/predict", json=cliente_riesgo)
+    assert response.status_code == 200
+    data = response.json()
+    assert data["probabilidad_churn"] >= 0.4
+
+# Test 7: Formato de respuesta
+def test_formato_respuesta():
+    """La respuesta debe tener exactamente los campos esperados."""
+    response = client.post("/predict", json=CLIENTE_VALIDO)
+    data = response.json()
+    assert set(data.keys()) == {"churn", "probabilidad_churn", "riesgo"}
+    assert isinstance(data["churn"], int)
+    assert isinstance(data["probabilidad_churn"], float)
+    assert isinstance(data["riesgo"], str)
