@@ -1,9 +1,91 @@
-name: Mi Primer Workflow
-on: [pull_request, push] # Acá le decís qué eventos lo activan
+name: CI — AndesLink Churn API
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  hola-mundo:
+  tests:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Saludar
-        run: echo "¡Hola! El workflow se está ejecutando correctamente."
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: |
+          pip install fastapi uvicorn pydantic scikit-learn pandas numpy joblib requests httpx pytest pytest-html
+
+      - name: Crear modelo de prueba
+        run: |
+          python - <<'EOF'
+          import pandas as pd
+          import joblib
+          import os
+          from sklearn.pipeline import Pipeline
+          from sklearn.preprocessing import StandardScaler, OneHotEncoder
+          from sklearn.compose import ColumnTransformer
+          from sklearn.linear_model import LogisticRegression
+          from sklearn.datasets import make_classification
+          import numpy as np
+
+          # Dataset sintético mínimo para el test
+          cat_cols = ['contract_type', 'payment_method', 'internet_service', 'region']
+          num_cols = ['tenure_months', 'monthly_charge', 'total_charges', 'support_tickets',
+                      'late_payments', 'avg_monthly_usage_gb', 'has_streaming',
+                      'has_security_pack', 'num_products', 'customer_age', 'is_promo']
+
+          n = 200
+          data = {
+              'tenure_months': np.random.randint(1, 72, n),
+              'monthly_charge': np.random.uniform(10, 150, n),
+              'total_charges': np.random.uniform(100, 5000, n),
+              'support_tickets': np.random.randint(0, 10, n),
+              'late_payments': np.random.randint(0, 5, n),
+              'avg_monthly_usage_gb': np.random.uniform(0, 300, n),
+              'has_streaming': np.random.randint(0, 2, n),
+              'has_security_pack': np.random.randint(0, 2, n),
+              'num_products': np.random.randint(1, 5, n),
+              'customer_age': np.random.randint(18, 80, n),
+              'is_promo': np.random.randint(0, 2, n),
+              'contract_type': np.random.choice(['mensual', 'anual', 'bianual'], n),
+              'payment_method': np.random.choice(['debito', 'credito', 'efectivo', 'transferencia'], n),
+              'internet_service': np.random.choice(['fibra', 'cable', 'movil', 'ninguno'], n),
+              'region': np.random.choice(['centro', 'norte', 'sur', 'oeste'], n),
+              'churn': np.random.randint(0, 2, n),
+          }
+          df = pd.DataFrame(data)
+          X = df.drop('churn', axis=1)
+          y = df['churn']
+
+          preprocessor = ColumnTransformer(transformers=[
+              ('num', StandardScaler(), num_cols),
+              ('cat', OneHotEncoder(handle_unknown='ignore'), cat_cols)
+          ])
+          pipeline = Pipeline(steps=[
+              ('preprocessor', preprocessor),
+              ('classifier', LogisticRegression(max_iter=1000, class_weight='balanced'))
+          ])
+          pipeline.fit(X, y)
+          os.makedirs('models', exist_ok=True)
+          joblib.dump(pipeline, 'models/model_churn.pkl')
+          print("Modelo de prueba creado OK")
+          EOF
+
+      - name: Correr tests
+        run: |
+          pytest tests/ -v --html=reports/test_report.html --self-contained-html
+
+      - name: Subir reporte de tests
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-report
+          path: reports/test_report.html
