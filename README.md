@@ -201,9 +201,13 @@ Abrí `localhost:5001` → pestaña **Model training** → experimento `AndesLin
 ## Estrategia de reproducibilidad
 
 - **Git** versiona el código fuente y archivos de configuración.
-- **DVC** versiona el dataset (`churn_sintetico.csv.dvc`). El CSV real no se commitea al repo; en producción el remote apuntaría a S3 o GCS.
+- **DVC** está configurado para versionado del dataset (`churn_sintetico.csv.dvc`). 
+  El archivo `.dvc` se mantiene para trazabilidad. El CSV se incluye directamente 
+  en el repositorio dado que es un dataset sintético de tamaño reducido (5.000 registros). 
+  En un entorno productivo el remote apuntaría a S3 o GCS con autenticación por 
+  Service Account.
 - **MLflow** registra todos los experimentos, hiperparámetros y métricas.
-- **Docker** garantiza que la solución corre igual en cualquier máquina.
+- **Docker** garantiza reproducibilidad del despliegue.
 
 ---
 
