@@ -214,3 +214,7 @@ Abrí `localhost:5001` → pestaña **Model training** → experimento `AndesLin
 - `reports/INFORME_TECNICO_ANDESLINK_PARCIAL_1.pdf` — informe técnico de entrenamiento (EDA, preparación de datos, comparación de modelos).
 - `reports/INFORME_TECNICO_ANDESLINK_PARCIAL_2.pdf` — informe técnico de despliegue (arquitectura, API, Docker, tests).
 - `reports/test_report.html` — reporte detallado de los tests automatizados.
+
+## Consideraciones de Escalabilidad (Pruebas de Rendimiento futuras):
+
+La suite de pruebas actual con pytest valida la robustez funcional ante payloads correctos y erróneos. Para una fase posterior de producción, se prevé la incorporación de pruebas de carga stress con herramientas como Locust, orientadas a determinar el rendimiento máximo de solicitudes simultáneas (RPS) del pipeline de Machine Learning en el contenedor Docker.
