@@ -163,7 +163,5 @@ mlruns/
 mlruns.db
 # DVC
 .dvc/cache
-/data/*.csv
 # Editor & OS
 .vscode/
-.DS_Store
