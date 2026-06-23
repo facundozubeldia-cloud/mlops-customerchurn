@@ -31,7 +31,7 @@ La instalación local con `requirements.txt` (necesaria solo para el notebook, M
 ```
 Lab-Mineria-de-Datos/
 ├── data/
-│   ├── churn_sintetico.csv          # dataset (incluido en el repo, ver nota DVC)
+│   ├── churn_sintetico.csv          # dataset (incluido en el repo, ver nota DVC en estrategias de producibilidad)
 │   └── churn_sintetico.csv.dvc      # metadata de versionado DVC
 ├── models/
 │   └── model_churn.pkl              # modelo serializado listo para inferencia
