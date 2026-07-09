@@ -2,8 +2,6 @@ import streamlit as st
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
-from pathlib import Path
 import os
 
 # ── Configuración ──────────────────────────────────────────────────────────────
@@ -21,7 +19,6 @@ st.markdown("""
     .riesgo-alto   { background:#FDEDED; border-left:5px solid #E53935; padding:12px; border-radius:4px; }
     .riesgo-medio  { background:#FFF8E1; border-left:5px solid #FFA000; padding:12px; border-radius:4px; }
     .riesgo-bajo   { background:#E8F5E9; border-left:5px solid #43A047; padding:12px; border-radius:4px; }
-    .metric-box    { background:#F5F5F5; padding:16px; border-radius:8px; text-align:center; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -35,24 +32,24 @@ st.sidebar.header("🧑 Datos del Cliente")
 
 with st.sidebar:
     st.subheader("Información general")
-    tenure_months    = st.slider("Antigüedad (meses)", 1, 72, 12)
-    customer_age     = st.slider("Edad del cliente", 18, 80, 35)
-    num_products     = st.slider("Cantidad de productos", 1, 5, 2)
-    is_promo         = st.selectbox("¿Ingresó con promoción?", [0, 1], format_func=lambda x: "Sí" if x else "No")
+    tenure_months     = st.slider("Antigüedad (meses)", 1, 72, 12)
+    customer_age      = st.slider("Edad del cliente", 18, 80, 35)
+    num_products      = st.slider("Cantidad de productos", 1, 5, 2)
+    is_promo          = st.selectbox("¿Ingresó con promoción?", [0, 1], format_func=lambda x: "Sí" if x else "No")
 
     st.subheader("Facturación")
-    monthly_charge   = st.number_input("Cargo mensual ($)", 10.0, 150.0, 65.0, step=5.0)
-    total_charges    = st.number_input("Cargo total acumulado ($)", 0.0, 10000.0, float(tenure_months * monthly_charge), step=10.0)
-    late_payments    = st.slider("Pagos tardíos", 0, 10, 0)
+    monthly_charge    = st.number_input("Cargo mensual ($)", 10.0, 150.0, 65.0, step=5.0)
+    total_charges     = st.number_input("Cargo total acumulado ($)", 0.0, 10000.0, float(tenure_months * monthly_charge), step=10.0)
+    late_payments     = st.slider("Pagos tardíos", 0, 10, 0)
 
     st.subheader("Servicio")
-    contract_type    = st.selectbox("Tipo de contrato", ["mensual", "anual", "bianual"])
-    internet_service = st.selectbox("Servicio de internet", ["fibra", "cable", "movil", "ninguno"])
-    payment_method   = st.selectbox("Método de pago", ["debito", "credito", "transferencia", "efectivo"])
-    region           = st.selectbox("Región", ["centro", "norte", "sur", "oeste"])
+    contract_type     = st.selectbox("Tipo de contrato", ["mensual", "anual", "bianual"])
+    internet_service  = st.selectbox("Servicio de internet", ["fibra", "cable", "movil", "ninguno"])
+    payment_method    = st.selectbox("Método de pago", ["debito", "credito", "transferencia", "efectivo"])
+    region            = st.selectbox("Región", ["centro", "norte", "sur", "oeste"])
     avg_monthly_usage_gb = st.number_input("Uso mensual promedio (GB)", 0.0, 500.0, 120.0, step=10.0)
-    support_tickets  = st.slider("Tickets de soporte", 0, 10, 1)
-    has_streaming    = st.selectbox("¿Tiene streaming?", [0, 1], format_func=lambda x: "Sí" if x else "No")
+    support_tickets   = st.slider("Tickets de soporte", 0, 10, 1)
+    has_streaming     = st.selectbox("¿Tiene streaming?", [0, 1], format_func=lambda x: "Sí" if x else "No")
     has_security_pack = st.selectbox("¿Tiene paquete de seguridad?", [0, 1], format_func=lambda x: "Sí" if x else "No")
 
 # ── Predicción ─────────────────────────────────────────────────────────────────
@@ -81,12 +78,19 @@ if predecir:
     }
 
     try:
+        # Verificar healthcheck antes de predecir
+        health = requests.get(f"{API_URL}/health", timeout=3)
+        if health.status_code != 200:
+            st.error(f"❌ La API no está lista. Estado: {health.status_code}. URL: {API_URL}")
+            st.stop()
+
+        # Predicción
         response = requests.post(f"{API_URL}/predict", json=payload, timeout=5)
         result = response.json()
 
-        prob    = result["probabilidad_churn"]
-        churn   = result["churn"]
-        riesgo  = result["riesgo"]
+        prob   = result["probabilidad_churn"]
+        churn  = result["churn"]
+        riesgo = result["riesgo"]
 
         st.divider()
         st.subheader("📊 Resultado de la Predicción")
@@ -140,8 +144,18 @@ if predecir:
         }]).T.rename(columns={0: "Valor"})
         st.table(resumen)
 
+        # JSON enviado y recibido (útil para defensa técnica)
+        with st.expander("🔍 Ver JSON enviado y respuesta de la API"):
+            col_req, col_res = st.columns(2)
+            with col_req:
+                st.markdown("**Request enviado:**")
+                st.json(payload)
+            with col_res:
+                st.markdown("**Response recibida:**")
+                st.json(result)
+
     except requests.exceptions.ConnectionError:
-        st.error("❌ No se pudo conectar con la API. Asegurate de que esté corriendo en localhost:8000.")
+        st.error(f"❌ No se pudo conectar con la API en {API_URL}. Verificá que el servicio esté corriendo.")
     except Exception as e:
         st.error(f"❌ Error inesperado: {e}")
 

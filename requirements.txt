@@ -90,3 +90,5 @@ yarl==1.23.0
 zipp==3.23.1
 dvc==3.67.1
 streamlit==1.41.0
+pytest==9.0.3
+httpx==0.28.1
