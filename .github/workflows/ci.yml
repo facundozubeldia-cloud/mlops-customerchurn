@@ -21,7 +21,11 @@ jobs:
 
       - name: Instalar dependencias
         run: |
-          pip install fastapi uvicorn pydantic scikit-learn pandas numpy joblib requests httpx pytest pytest-html
+          python -m pip install --upgrade pip
+          # Usamos tu archivo de dependencias de producción para asegurar consistencia
+          pip install -r requirements-docker.txt
+          # Instalamos las herramientas de testing
+          pip install pytest pytest-html
 
       - name: Crear modelo de prueba
         run: |
