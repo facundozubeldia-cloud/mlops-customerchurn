@@ -9,3 +9,4 @@ requests==2.33.1
 streamlit
 matplotlib==3.10.8
 seaborn==0.13.2
+prometheus-fastapi-instrumentator==8.0.2

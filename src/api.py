@@ -5,7 +5,7 @@ from typing import Literal
 from pathlib import Path
 import joblib
 import pandas as pd
-
+from prometheus_fastapi_instrumentator import Instrumentator
 # ── Logging ────────────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
@@ -30,7 +30,8 @@ app = FastAPI(
     description="API de inferencia para predicción de abandono de clientes.",
     version="1.0.0"
 )
-
+#instrumentación
+Instrumentator().instrument(app).expose(app)
 # ── Schema de entrada ──────────────────────────────────────────────────────────
 class ClienteInput(BaseModel):
     tenure_months:        int   = Field(..., ge=0,  json_schema_extra={"example": 12})
