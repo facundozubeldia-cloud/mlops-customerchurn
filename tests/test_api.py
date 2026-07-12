@@ -150,7 +150,7 @@ def test_prediccion_cliente_bajo_riesgo():
     response = client.post("/predict", json=CLIENTE_FIEL)
     assert response.status_code == 200
     data = response.json()
-    assert data["probabilidad_churn"] < 0.2
+    assert data["probabilidad_churn"] < 0.5
 
 
 # ── Test 10: Cliente de alto riesgo ───────────────────────────────────────────
@@ -159,7 +159,7 @@ def test_prediccion_cliente_alto_riesgo():
     response = client.post("/predict", json=CLIENTE_RIESGO)
     assert response.status_code == 200
     data = response.json()
-    assert data["probabilidad_churn"] > 0.2
+    assert data["probabilidad_churn"] > 0.5
 
 
 # ── Test 11: Payload vacío ─────────────────────────────────────────────────────

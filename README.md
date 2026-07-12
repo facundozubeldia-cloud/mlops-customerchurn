@@ -22,6 +22,10 @@ El proyecto cubre el ciclo completo de MLOps: entrenamiento, despliegue y monito
 docker-compose up --build -d
 ```
 
+# Comentarios
+
+En el caso de que utilices multiples predicciones en el modelo de andeslink, por favor, eliminar cache con ctlr + f5 (esto resetea cache y permite que la pagina no se resetee con cada predicción).
+
 El entorno local con `requirements.txt` está pensado para desarrollo (notebook, MLflow, DVC) y puede requerir ajustes según el sistema operativo. Para correr únicamente la API y el dashboard sin Docker, usá `requirements-docker.txt`.
 
 ---
