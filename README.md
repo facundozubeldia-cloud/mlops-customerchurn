@@ -28,6 +28,11 @@ En el caso de que utilices multiples predicciones en el modelo de andeslink, por
 
 El entorno local con `requirements.txt` está pensado para desarrollo (notebook, MLflow, DVC) y puede requerir ajustes según el sistema operativo. Para correr únicamente la API y el dashboard sin Docker, usá `requirements-docker.txt`.
 
+
+Asimismo, en caso de que algun puerto este ocupado por multiples ejecuciones:
+docker-compose down -v
+docker-compose up --build -d
+esto tira
 ---
 
 ## Estructura del proyecto
@@ -41,6 +46,12 @@ Lab-Mineria-de-Datos/
 │   └── model_churn.pkl              # modelo serializado listo para inferencia
 ├── monitoring/
 │   └── prometheus.yml               # configuración de scraping de Prometheus
+│   └── grafana_dashboard.json
+│   └── provisioning
+│       └──Dashboards
+│          └──dashboards.yml 
+│       └──Datasources
+│          └──datasources.yml          
 ├── notebooks/
 │   ├── 01_eda_customer_churn.ipynb  # EDA, preprocesamiento y entrenamiento
 │   └── mlflow.db                    # tracking de experimentos (SQLite)
@@ -128,6 +139,10 @@ docker-compose logs -f     # ver logs en tiempo real
 docker-compose down        # detener y eliminar los contenedores
 ```
 
+```
+docker-compose down -v  
+docker-compose up --build -d   # detiene los contenedores y vuelve a correrlos.
+```
 ---
 
 ## Monitoreo
