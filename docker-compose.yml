@@ -53,6 +53,9 @@ services:
       - GF_SECURITY_ADMIN_USER=admin
     volumes:
       - grafana_data:/var/lib/grafana
+      - ./monitoring/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./monitoring/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./monitoring/grafana_dashboard.json:/etc/grafana/dashboards/api_metrics.json
     depends_on:
       - prometheus
     restart: unless-stopped
