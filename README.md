@@ -4,6 +4,7 @@
 **Materia:** Laboratorio de Minería de Datos — ISTEA  
 **Profesor:** Ing. Diego Mosquera
 
+
 ---
 
 ## Descripción
@@ -13,6 +14,11 @@ Este repositorio contiene el desarrollo integral de una solución de Machine Lea
 El proyecto cubre el ciclo completo de MLOps: entrenamiento, despliegue y monitoreo.
 
 ---
+## Documentacíon
+
+La totalidad de la documentación que abarca las correcciones de la entrega 1 y 2, como tambien la entrega 3, se encuentran en el archivo /reports/DOCUMENTACIÓN_FINAL.DOCX
+
+Asimismo se encuentra la ppt utilizada en el video de presentación, como tambien las entregas 1 y 2.
 
 ## ⚠️ Recomendación de uso
 
@@ -62,7 +68,7 @@ Lab-Mineria-de-Datos/
 ├── reports/
 │   ├── INFORME_TECNICO_ANDESLINK_PARCIAL_1.pdf
 │   ├── INFORME_TECNICO_ANDESLINK_PARCIAL_2.pdf
-│   ├── INFORME_TECNICO_ANDESLINK_PARCIAL_3.docx
+│   ├── DOCUMENTACIÓN_FINAL.docx
 │   ├── reporte_evidently.html       # reporte de drift de datos
 │   └── test_report.html             # reporte de tests pytest
 ├── scripts/
