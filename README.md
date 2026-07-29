@@ -1,9 +1,8 @@
 # Proyecto MLOps — AndesLink: Predicción de Churn
 
-**Alumnos:** Facundo Zubeldia · Gonzalo Martín González Nastovich · Agustín Meza  
-**Materia:** Laboratorio de Minería de Datos — ISTEA  
-**Profesor:** Ing. Diego Mosquera
+# Autoria 
 
+-Facundo Zubeldia 
 
 ---
 
