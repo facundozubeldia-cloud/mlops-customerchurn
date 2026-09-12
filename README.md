@@ -251,3 +251,4 @@ Abrí `localhost:5001` → pestaña **Model training** → experimento `AndesLin
 - `reports/INFORME_TECNICO_ANDESLINK_PARCIAL_3.docx` — monitoreo: Prometheus, Grafana, Evidently, análisis de drift.
 - `reports/reporte_evidently.html` — reporte interactivo de drift de datos.
 - `reports/test_report.html` — reporte detallado de los 11 tests automatizados.
+< Verified on Linux Mint -->
