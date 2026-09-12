@@ -14,16 +14,17 @@ El proyecto cubre el ciclo completo de MLOps: entrenamiento, despliegue y monito
 
 ---
 ## Documentacíon
-La totalidad de la documentación se encuentra en el archivo /reports/DOCUMENTACIÓN_FINAL.DOCX
+
+La totalidad de la documentación que abarca las correcciones de la entrega 1 y 2, como tambien la entrega 3, se encuentran en el archivo /reports/DOCUMENTACIÓN_FINAL.DOCX
 
 Asimismo se encuentra la ppt utilizada en el video de presentación, como tambien las entregas 1 y 2.
 
 ## ⚠️ Recomendación de uso
 
-**Para correr el proyecto, usá Docker** — es el camino recomendado y validado.
+**Para correr el proyecto, usá Docker** — es el camino recomendado y validado por el equipo:
 
 ```bash
-docker compose up --build -d
+docker-compose up --build -d
 ```
 
 # Comentarios
@@ -250,4 +251,3 @@ Abrí `localhost:5001` → pestaña **Model training** → experimento `AndesLin
 - `reports/INFORME_TECNICO_ANDESLINK_PARCIAL_3.docx` — monitoreo: Prometheus, Grafana, Evidently, análisis de drift.
 - `reports/reporte_evidently.html` — reporte interactivo de drift de datos.
 - `reports/test_report.html` — reporte detallado de los 11 tests automatizados.
-< Verified on Linux Mint -->
